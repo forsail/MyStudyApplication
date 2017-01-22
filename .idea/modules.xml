@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyStudyApplication.iml" filepath="$PROJECT_DIR$/MyStudyApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_base/lib_base.iml" filepath="$PROJECT_DIR$/lib_base/lib_base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_hybird/lib_hybird.iml" filepath="$PROJECT_DIR$/lib_hybird/lib_hybird.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_navigator/lib_navigator.iml" filepath="$PROJECT_DIR$/lib_navigator/lib_navigator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib_network/lib_network.iml" filepath="$PROJECT_DIR$/lib_network/lib_network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_one/module_one.iml" filepath="$PROJECT_DIR$/module_one/module_one.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_two/module_two.iml" filepath="$PROJECT_DIR$/module_two/module_two.iml" />
+    </modules>
+  </component>
+</project>

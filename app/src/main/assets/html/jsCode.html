@@ -1,0 +1,25 @@
+<html>
+<head>
+    <script type="text/javascript">
+        function show_alert(arg)
+        {
+            document.getElementById("p1").innerHTML="call success! " + arg;
+            return "java call js test"
+        }
+
+        function jump()
+        {
+            window.location.assign("http://www.asher.com")
+            console.log("log test");
+        }
+
+    </script>
+</head>
+<body>
+
+<input type="button" onclick="window.android.jsCallAndroid()" value="Call native method"/>
+<input type="button" onclick="jump()" value="Url intercept"/>
+
+<p id="p1">test</p>
+</body>
+</html>
