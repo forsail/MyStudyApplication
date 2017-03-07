@@ -1,5 +1,6 @@
 package com.example.administrator.mystudyapplication;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
@@ -7,10 +8,20 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.transition.ChangeBounds;
+import android.transition.Fade;
+import android.transition.Scene;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
+import android.transition.TransitionValues;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
@@ -47,7 +58,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView hello;
     private JsCallJava mJsCallJava;
     private ExpandIconView expandIconView3;
+    private Scene scene1;
+    private Scene scene2;
+    private boolean isScene;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,19 +124,20 @@ public class MainActivity extends AppCompatActivity {
 //                Intent intent = new Intent(MainOneActivity.this, SecondActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                MainOneActivity.this.getApplicationContext().startActivity(intent);
-                if (Build.VERSION.SDK_INT >= 19) {
-                    webView.evaluateJavascript("javascript:show_alert(" + index + ")", new ValueCallback<String>() {
-                        @Override
-                        public void onReceiveValue(String value) {
-                            Log.d(TAG, "onReceiveValue: " + Thread.currentThread().getName());
-                            Log.d(TAG, "onReceiveValue: " + value);
-                        }
-                    });
-                } else {
-                    webView.loadUrl("javascript:show_alert(" + index + ")");
-                }
-
-                index++;
+//                if (Build.VERSION.SDK_INT >= 19) {
+//                    webView.evaluateJavascript("javascript:show_alert(" + index + ")", new ValueCallback<String>() {
+//                        @Override
+//                        public void onReceiveValue(String value) {
+//                            Log.d(TAG, "onReceiveValue: " + Thread.currentThread().getName());
+//                            Log.d(TAG, "onReceiveValue: " + value);
+//                        }
+//                    });
+//                } else {
+//                    webView.loadUrl("javascript:show_alert(" + index + ")");
+//                }
+//
+//                index++;
+                change();
             }
         });
 
@@ -173,6 +189,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         addShortcut();
+
+        ViewGroup sceneRoot = (ViewGroup) findViewById(R.id.scene_container);
+        scene1 = Scene.getSceneForLayout(sceneRoot, R.layout.scene_one, this);
+        scene2 = Scene.getSceneForLayout(sceneRoot, R.layout.scene_two, this);
+        TransitionManager.go(scene1);
     }
 
     @JavascriptInterface
@@ -201,6 +222,15 @@ public class MainActivity extends AppCompatActivity {
 
             shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void change() {
+        TransitionManager.go(isScene ? scene1 : scene2, new TransitionSet().addTransition(new ChangeBounds())
+                .addTransition(new Fade(Fade.IN))
+                .addTransition(new Fade(Fade.OUT)));
+        isScene = !isScene;
     }
 
 }
