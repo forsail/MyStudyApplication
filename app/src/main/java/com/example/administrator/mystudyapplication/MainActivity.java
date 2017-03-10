@@ -1,5 +1,6 @@
 package com.example.administrator.mystudyapplication;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private Scene scene2;
     private boolean isScene;
 
+    @SuppressLint("AddJavascriptInterface")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,23 +123,19 @@ public class MainActivity extends AppCompatActivity {
         hello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(MainOneActivity.this, SecondActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                MainOneActivity.this.getApplicationContext().startActivity(intent);
-//                if (Build.VERSION.SDK_INT >= 19) {
-//                    webView.evaluateJavascript("javascript:show_alert(" + index + ")", new ValueCallback<String>() {
-//                        @Override
-//                        public void onReceiveValue(String value) {
-//                            Log.d(TAG, "onReceiveValue: " + Thread.currentThread().getName());
-//                            Log.d(TAG, "onReceiveValue: " + value);
-//                        }
-//                    });
-//                } else {
-//                    webView.loadUrl("javascript:show_alert(" + index + ")");
-//                }
-//
-//                index++;
-                change();
+                if (Build.VERSION.SDK_INT >= 19) {
+                    webView.evaluateJavascript("javascript:show_alert(" + index + ")", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String value) {
+                            Log.d(TAG, "onReceiveValue: " + Thread.currentThread().getName());
+                            Log.d(TAG, "onReceiveValue: " + value);
+                        }
+                    });
+                } else {
+                    webView.loadUrl("javascript:show_alert(" + index + ")");
+                }
+
+                index++;
             }
         });
 
@@ -190,10 +188,10 @@ public class MainActivity extends AppCompatActivity {
 
         addShortcut();
 
-        ViewGroup sceneRoot = (ViewGroup) findViewById(R.id.scene_container);
-        scene1 = Scene.getSceneForLayout(sceneRoot, R.layout.scene_one, this);
-        scene2 = Scene.getSceneForLayout(sceneRoot, R.layout.scene_two, this);
-        TransitionManager.go(scene1);
+//        ViewGroup sceneRoot = (ViewGroup) findViewById(R.id.scene_container);
+//        scene1 = Scene.getSceneForLayout(sceneRoot, R.layout.scene_one, this);
+//        scene2 = Scene.getSceneForLayout(sceneRoot, R.layout.scene_two, this);
+//        TransitionManager.go(scene1);
     }
 
     @JavascriptInterface
@@ -215,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             ShortcutInfo shortcut = new ShortcutInfo.Builder(this, "id1")
                     .setShortLabel("快捷方式")
                     .setLongLabel("快捷方式测试长标题显示")
-                    .setIcon(Icon.createWithResource(context, R.drawable.ic_add_a_photo_black_18dp))
+                    .setIcon(Icon.createWithResource(context, R.drawable.ic_app_management_green_24))
                     .setIntent(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("https://www.baidu.com/")))
                     .build();

