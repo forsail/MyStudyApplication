@@ -16,16 +16,20 @@
             if (typeof callback !== 'function') {
                 callback = null;
             }
-
+            //生一个callbackId，用于请求结果的回调
             sid = Private.getSid();
 
+            //把callbackId和对应的回调存储起来，以供会面回调的操作
             Private.registerCall(sid, callback);
+
+            //调用方法
             Private.callMethod(obj, method, params, sid);
 
         },
 
         //native代码处理 成功/失败 后，调用该方法来通知js
         onComplete: function (sid, data) {
+            console.log(sid+JSON.stringify(data))
             Private.onComplete(sid, data);
         }
     };
@@ -90,7 +94,7 @@
 
         //生成URI，调用native功能
         callMethod: function (obj, method, params, sid) {
-            // hybrid://objectName:sid/methodName?params
+            // lvmama://objectName:sid/methodName?params
             params = Private.buildParam(params);
 
             var uri = LOCAL_PROTOCOL + '://' + obj + ':' + sid + '/' + method + '?' + params;

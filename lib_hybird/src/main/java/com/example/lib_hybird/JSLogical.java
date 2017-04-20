@@ -24,7 +24,7 @@ public class JSLogical implements IInject {
         if (null != callback) {
             try {
                 JSONObject object = new JSONObject();
-                object.put("result", true);
+                object.put("result", "JsBridge success");
                 invokeJSCallback(callback, object);
             } catch (Exception e) {
                 e.printStackTrace();

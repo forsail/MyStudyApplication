@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.transition.ChangeBounds;
@@ -92,19 +93,16 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                Toast.makeText(MainActivity.this, "onJsAlert", Toast.LENGTH_SHORT).show();
                 return super.onJsAlert(view, url, message, result);
             }
 
             @Override
             public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-                Toast.makeText(MainActivity.this, "onJsConfirm", Toast.LENGTH_SHORT).show();
                 return super.onJsConfirm(view, url, message, result);
             }
 
             @Override
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-                Toast.makeText(MainActivity.this, "onJsPrompt", Toast.LENGTH_SHORT).show();
                 result.confirm(mJsCallJava.call(view, message));
                 return true;
             }
@@ -124,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= 19) {
-                    webView.evaluateJavascript("javascript:show_alert(" + index + ")", new ValueCallback<String>() {
+                    webView.evaluateJavascript("javascript:show_text(" + index + ")", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {
                             Log.d(TAG, "onReceiveValue: " + Thread.currentThread().getName());
@@ -132,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    webView.loadUrl("javascript:show_alert(" + index + ")");
+                    webView.loadUrl("javascript:show_text(" + index + ")");
                 }
 
                 index++;
@@ -183,6 +181,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 expandIconView3.switchState();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("lvmama://m.lvmama.com"));
+                startActivity(intent);
             }
         });
 
@@ -202,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Log.d(TAG, "run: " + Thread.currentThread().getName());
                 Toast.makeText(MainActivity.this, "js call android", Toast.LENGTH_SHORT).show();
-                hello.setText("Success");
             }
         });
     }

@@ -3,6 +3,7 @@ package com.example.lib_hybird;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.WebView;
 
 import org.json.JSONObject;
@@ -14,6 +15,8 @@ import java.lang.ref.WeakReference;
  */
 
 public class JsCallback {
+
+    private static final String TAG = "JsCallback";
     private WeakReference<WebView> mWebViewRef;
     private String mCallbackId;
     private boolean mCouldGoOn = true;
@@ -51,7 +54,10 @@ public class JsCallback {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //把执行的结果传给js,实际调用的是js暴露给Native的onComplete方法
         final String jsFunc = String.format(CALLBACK_JS_FORMAT, mCallbackId, String.valueOf(result));
+        Log.d(TAG, "apply: "+jsFunc);
 
         if (mWebViewRef != null && mWebViewRef.get() != null) {
             mHandler.post(new Runnable() {
